@@ -1,0 +1,214 @@
+{
+	"info": {
+		"_postman_id": "64191045-8d52-2abb-2d84-f7ec3492701c",
+		"name": "UBCAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Arash Transcript",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{aws_host}}/courses?c0=PHYS153&c1=APSC160&c2=CHEM154&c3=MATH100&c4=APSC150&c5=MATH101&c6=MATH152&c7=PHYS170&c8=ENGL112&c9=MATH253&c10=MECH226&c11=MATH255&c12=MECH220&c13=MECH221&c14=MECH224&c15=MECH222&c16=MECH223&c17=MECH225&c18=MECH375&c19=MECH368&c20=MECH360&c21=MECH328&c22=MECH326&c23=MECH325&c24=CIVL200&c25=EOSC114&c26=PHIL120&c27=MECH380&c28=MECH358&c29=MECH305&c30=LING101&c31=MATH307&version_key=1.2",
+					"host": [
+						"{{aws_host}}"
+					],
+					"path": [
+						"courses"
+					],
+					"query": [
+						{
+							"key": "c0",
+							"value": "PHYS153"
+						},
+						{
+							"key": "c1",
+							"value": "APSC160"
+						},
+						{
+							"key": "c2",
+							"value": "CHEM154"
+						},
+						{
+							"key": "c3",
+							"value": "MATH100"
+						},
+						{
+							"key": "c4",
+							"value": "APSC150"
+						},
+						{
+							"key": "c5",
+							"value": "MATH101"
+						},
+						{
+							"key": "c6",
+							"value": "MATH152"
+						},
+						{
+							"key": "c7",
+							"value": "PHYS170"
+						},
+						{
+							"key": "c8",
+							"value": "ENGL112"
+						},
+						{
+							"key": "c9",
+							"value": "MATH253"
+						},
+						{
+							"key": "c10",
+							"value": "MECH226"
+						},
+						{
+							"key": "c11",
+							"value": "MATH255"
+						},
+						{
+							"key": "c12",
+							"value": "MECH220"
+						},
+						{
+							"key": "c13",
+							"value": "MECH221"
+						},
+						{
+							"key": "c14",
+							"value": "MECH224"
+						},
+						{
+							"key": "c15",
+							"value": "MECH222"
+						},
+						{
+							"key": "c16",
+							"value": "MECH223"
+						},
+						{
+							"key": "c17",
+							"value": "MECH225"
+						},
+						{
+							"key": "c18",
+							"value": "MECH375"
+						},
+						{
+							"key": "c19",
+							"value": "MECH368"
+						},
+						{
+							"key": "c20",
+							"value": "MECH360"
+						},
+						{
+							"key": "c21",
+							"value": "MECH328"
+						},
+						{
+							"key": "c22",
+							"value": "MECH326"
+						},
+						{
+							"key": "c23",
+							"value": "MECH325"
+						},
+						{
+							"key": "c24",
+							"value": "CIVL200"
+						},
+						{
+							"key": "c25",
+							"value": "EOSC114"
+						},
+						{
+							"key": "c26",
+							"value": "PHIL120"
+						},
+						{
+							"key": "c27",
+							"value": "MECH380"
+						},
+						{
+							"key": "c28",
+							"value": "MECH358"
+						},
+						{
+							"key": "c29",
+							"value": "MECH305"
+						},
+						{
+							"key": "c30",
+							"value": "LING101"
+						},
+						{
+							"key": "c31",
+							"value": "MATH307"
+						},
+						{
+							"key": "version_key",
+							"value": "1.2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SingleRequest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{aws_host}}/courses?c0=PHYS153",
+					"host": [
+						"{{aws_host}}"
+					],
+					"path": [
+						"courses"
+					],
+					"query": [
+						{
+							"key": "c0",
+							"value": "PHYS153"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "4f8b2fba-e013-4926-97f4-9115e67ce842",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "eedf59e5-d585-4d2b-8925-ee07db294566",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "1071a078-08d5-44c9-b51f-6e80f86a0414",
+			"key": "aws_host",
+			"value": "https://v7rr12wbr7.execute-api.us-west-2.amazonaws.com/prod",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
