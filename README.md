@@ -1,5 +1,5 @@
 # Postman Gen
-Just a small command line tool that's takes advantage of the Postman SDK to create code snippets from Postman Collections (Exported from Postman).
+Just a small command line tool that's takes advantage of the [Postman SDK](https://github.com/postmanlabs/postman-collection) and [postman-code-gen](https://github.com/postmanlabs/postman-code-generators#postman-code-generators-) to create code snippets from Postman Collections (Exported from Postman).
 
 For some reason this feature is missing in the actual client so I thought I would quickly make a tool that does what I want.
 
@@ -22,11 +22,14 @@ Options:
 - To generate `cURL` snippets:
 `node main.js -c example_collection.json`
 ### Generate other languages
-`node main.js -c example_collection.json -d -l shell -v httpie`
-`node main.js -c example_collection.json -d -l Swift -v URLSession`
+
+```bash
+node main.js -c example_collection.json -d -l shell -v httpie
+node main.js -c example_collection.json -d -l Swift -v URLSession
+```
 For a full list see:
 https://github.com/postmanlabs/postman-code-generators#postman-code-generators-
 ### Import Environment Variables
-You can also substitute variables from exported Evironment Variables from Postman (Note: That variables in the Collection JSON will take precedence)
+You can also substitute variables from exported Evironment Variables from Postman (Note: That variables in the Collection JSON will take precedence)     
 `node main.js -c example_collection.json --envvars environment.json`
 
