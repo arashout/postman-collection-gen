@@ -26,4 +26,7 @@ Options:
 `node main.js -c example_collection.json -d -l Swift -v URLSession`
 For a full list see:
 https://github.com/postmanlabs/postman-code-generators#postman-code-generators-
+### Import Environment Variables
+You can also substitute variables from exported Evironment Variables from Postman (Note: That variables in the Collection JSON will take precedence)
+`node main.js -c example_collection.json --envvars environment.json`
 
