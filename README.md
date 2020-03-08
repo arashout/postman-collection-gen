@@ -20,12 +20,17 @@ Options:
 ### Generate cURL code
 - Export your Collection from Postman as JSON in the 2.1 format e.g. [`example_collection.json`](./example_collection.json)
 - To generate `cURL` snippets:
-`node main.js -c example_collection.json`
+```bash
+node main.js -c example_collection.json
+# Output:
+# curl --location --request GET 'https://v7rr12wbr7.execute-api.us-west-2.amazonaws.com/prod/courses?c0=PHYS153&c1=APSC160&c2=CHEM154&c3=MATH100&c4=APSC150&c5=MATH101&c6=MATH152&c7=PHYS170&c8=ENGL112&c9=MATH253&c10=MECH226&c11=MATH255&c12=MECH220&c13=MECH221&c14=MECH224&c15=MECH222&c16=MECH223&c17=MECH225&c18=MECH375&c19=MECH368&c20=MECH360&c21=MECH328&c22=MECH326&c23=MECH325&c24=CIVL200&c25=EOSC114&c26=PHIL120&c27=MECH380&c28=MECH358&c29=MECH305&c30=LING101&c31=MATH307&version_key=1.2'
+# curl --location --request GET 'https://v7rr12wbr7.execute-api.us-west-2.amazonaws.com/prod/courses?c0=PHYS153'
+```
 ### Generate other languages
 
 ```bash
-node main.js -c example_collection.json -d -l shell -v httpie
-node main.js -c example_collection.json -d -l Swift -v URLSession
+node main.js -c example_collection.json -d -l shell,httpie
+node main.js -c example_collection.json -d -l Swift,URLSession
 ```
 For a full list see:
 https://github.com/postmanlabs/postman-code-generators#postman-code-generators-

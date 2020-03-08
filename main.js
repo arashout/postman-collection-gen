@@ -41,13 +41,13 @@ var program = new commander.Command('generate');
 program.version('0.1');
 program
     .requiredOption('-c, --collection <path>', 'Path to the Postman 2.1 Collection JSON')
-    .option('-l,--language_variant <tuple>', 'Language,Variant pair to output', parseTuple, 'cURL,cURL')
+    .option('-l,--language_variant <tuple>', 'Language,Variant pair to output', parseTuple, { language: 'curl', variant: 'curl' })
     .option('-e,--envvars <path>', "Path to environment variables exported from Postman. NOTE: Environment variables will not override variables provided in collection")
     .option('-d, --debug', 'Output additional debugging info');
 program.parse(process.argv);
 function debugPrint(message) {
     if (program.debug) {
-        console.log(message);
+        console.log('DEBUG:', message);
     }
 }
 debugPrint(program.opts());
@@ -70,6 +70,7 @@ if (program['envvars']) {
     });
 }
 var lvp = program['language_variant'];
+console.log(lvp);
 debugPrint(environmentVariables);
 collection.items.all().forEach(function (item) {
     if (isItem(item))
