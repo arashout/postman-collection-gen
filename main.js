@@ -70,7 +70,6 @@ if (program['envvars']) {
     });
 }
 var lvp = program['language_variant'];
-console.log(lvp);
 debugPrint(environmentVariables);
 collection.items.all().forEach(function (item) {
     if (isItem(item))
