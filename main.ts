@@ -24,6 +24,8 @@ const languageVariantPairs = [
     "PHP,pecl_http",
     "PHP,HTTP_Request2",
     "PowerShell,RestMethod",
+    "Python,http.client",
+    "Python,Requests",
     "Ruby,Net:HTTP",
     "Shell,Httpie",
     "Shell,wget",
