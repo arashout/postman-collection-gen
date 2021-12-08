@@ -7,6 +7,7 @@ import * as commander from 'commander';
 
 const languageVariantPairs = [
     "C#,RestSharp",
+    "Dart,http",
     "cURL,cURL",
     "Go,Native",
     "HTTP,HTTP",
@@ -45,7 +46,7 @@ function parseTuple(value: string, dummy: string): { language: string, variant: 
 }
 
 const program = new commander.Command('generate');
-program.version('0.1');
+program.version('0.2');
 
 program
     .requiredOption('-c, --collection <path>', 'Path to the Postman 2.1 Collection JSON')
@@ -79,7 +80,31 @@ function isItem(itemG: Item | ItemGroup<Item>): itemG is Item {
     return (<Item>itemG).request !== undefined;
 }
 
-let environmentVariables = new VariableList(new Property({ name: 'environmentVariables' }), []);
+function isItemGroup(itemG: Item | ItemGroup<Item>): itemG is Item {
+    return (<ItemGroup<Item>>itemG).items !== undefined;
+}
+
+function printSnippet(item: Item | ItemGroup<Item>) {
+    if (isItem(item)) {
+        codegen.convert(lvp.language, lvp.variant, item.request, options, function (error: any, snippet: any) {
+            if (error) {
+                console.error('Error trying to generate code for request:', item.request, error);
+            }
+            const completeSnippet = collection.variables.replace(snippet, environmentVariables);
+            const re = /(?:\{\{(.+?)\}\})/g;
+            const matches = re.exec(completeSnippet);
+            if (matches && matches.length > 0) {
+                matches.forEach(m => console.warn(`${m} : Variable not provided`));
+            }
+            console.log(completeSnippet);
+        });
+    }
+    else if (isItemGroup(item)) {
+        item.items.all().forEach(printSnippet);
+    }
+}
+
+const environmentVariables = new VariableList(new Property({ name: 'environmentVariables' }), []);
 if (program['envvars']) {
     const environment = JSON.parse(readFileSync(program['envvars']).toString())
     debugPrint(environment);
@@ -90,18 +115,5 @@ if (program['envvars']) {
 
 const lvp: { language: string, variant: string } = program['language_variant'];
 debugPrint(environmentVariables);
-collection.items.all().forEach(item => {
-    if (isItem(item))
-        codegen.convert(lvp.language, lvp.variant, item.request, options, function (error: any, snippet: any) {
-            if (error) {
-                console.error('Error trying to generate code for request:', item.request, error);
-            }
-            const completeSnippet = collection.variables.replace(snippet)
-            const re = /(?:\{\{(.+?)\}\})/g
-            const matches = re.exec(completeSnippet);
-            if (matches && matches.length > 0) {
-                matches.forEach(m => console.warn(`${m} : Variable not provided`));
-            }
-            console.log(completeSnippet);
-        });
-});
+
+collection.items.all().forEach(printSnippet);

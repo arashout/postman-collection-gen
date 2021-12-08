@@ -6,6 +6,7 @@ var fs_1 = require("fs");
 var commander = require("commander");
 var languageVariantPairs = [
     "C#,RestSharp",
+    "Dart,http",
     "cURL,cURL",
     "Go,Native",
     "HTTP,HTTP",
@@ -23,6 +24,8 @@ var languageVariantPairs = [
     "PHP,pecl_http",
     "PHP,HTTP_Request2",
     "PowerShell,RestMethod",
+    "Python,http.client",
+    "Python,Requests",
     "Ruby,Net:HTTP",
     "Shell,Httpie",
     "Shell,wget",
@@ -38,7 +41,7 @@ function parseTuple(value, dummy) {
     return { language: tuple[0], variant: tuple[1] };
 }
 var program = new commander.Command('generate');
-program.version('0.1');
+program.version('0.2');
 program
     .requiredOption('-c, --collection <path>', 'Path to the Postman 2.1 Collection JSON')
     .option('-l,--language_variant <tuple>', 'Language,Variant pair to output', parseTuple, { language: 'curl', variant: 'curl' })
@@ -52,7 +55,7 @@ function debugPrint(message) {
 }
 debugPrint(program.opts());
 var collectionPath = program['collection'];
-var collection = new postman_collection_1.Collection(JSON.parse(fs_1.readFileSync(collectionPath).toString()));
+var collection = new postman_collection_1.Collection(JSON.parse((0, fs_1.readFileSync)(collectionPath).toString()));
 debugPrint(collection);
 var options = {
     trimRequestBody: true,
@@ -61,18 +64,19 @@ var options = {
 function isItem(itemG) {
     return itemG.request !== undefined;
 }
+function isItemGroup(itemG) {
+    return itemG.items !== undefined;
+}
 var environmentVariables = new postman_collection_1.VariableList(new postman_collection_1.Property({ name: 'environmentVariables' }), []);
 if (program['envvars']) {
-    var environment = JSON.parse(fs_1.readFileSync(program['envvars']).toString());
+    var environment = JSON.parse((0, fs_1.readFileSync)(program['envvars']).toString());
     debugPrint(environment);
     environment['values'].forEach(function (v) {
         environmentVariables.append(new postman_collection_1.Variable(v));
     });
 }
-var lvp = program['language_variant'];
-debugPrint(environmentVariables);
-collection.items.all().forEach(function (item) {
-    if (isItem(item))
+function printSnippet(item) {
+    if (isItem(item)) {
         codegen.convert(lvp.language, lvp.variant, item.request, options, function (error, snippet) {
             if (error) {
                 console.error('Error trying to generate code for request:', item.request, error);
@@ -85,4 +89,11 @@ collection.items.all().forEach(function (item) {
             }
             console.log(completeSnippet);
         });
-});
+    }
+    else if (isItemGroup(item)) {
+        item.items.all().forEach(printSnippet);
+    }
+}
+var lvp = program['language_variant'];
+debugPrint(environmentVariables);
+collection.items.all().forEach(printSnippet);
