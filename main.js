@@ -5,31 +5,31 @@ var codegen = require('postman-code-generators');
 var fs_1 = require("fs");
 var commander = require("commander");
 var languageVariantPairs = [
-    "C#,RestSharp",
-    "Dart,http",
-    "cURL,cURL",
-    "Go,Native",
-    "HTTP,HTTP",
-    "Java,OkHttp",
-    "Java,Unirest",
-    "JavaScript,Fetch",
-    "JavaScript,jQuery",
-    "JavaScript,XHR",
-    "NodeJs,Native",
-    "NodeJs,Request",
-    "NodeJs,Unirest",
-    "Objective-C,NSURLSession",
-    "OCaml,Cohttp",
-    "PHP,cURL",
-    "PHP,pecl_http",
-    "PHP,HTTP_Request2",
-    "PowerShell,RestMethod",
-    "Python,http.client",
-    "Python,Requests",
-    "Ruby,Net:HTTP",
-    "Shell,Httpie",
-    "Shell,wget",
-    "Swift,URLSession",
+    'C#,RestSharp',
+    'Dart,http',
+    'cURL,cURL',
+    'Go,Native',
+    'HTTP,HTTP',
+    'Java,OkHttp',
+    'Java,Unirest',
+    'JavaScript,Fetch',
+    'JavaScript,jQuery',
+    'JavaScript,XHR',
+    'NodeJs,Native',
+    'NodeJs,Request',
+    'NodeJs,Unirest',
+    'Objective-C,NSURLSession',
+    'OCaml,Cohttp',
+    'PHP,cURL',
+    'PHP,pecl_http',
+    'PHP,HTTP_Request2',
+    'PowerShell,RestMethod',
+    'Python,http.client',
+    'Python,Requests',
+    'Ruby,Net:HTTP',
+    'Shell,Httpie',
+    'Shell,wget',
+    'Swift,URLSession'
 ].map(function (v) { return v.toLowerCase(); });
 function parseTuple(value, dummy) {
     var v = value.trim().toLowerCase();
@@ -67,21 +67,13 @@ function isItem(itemG) {
 function isItemGroup(itemG) {
     return itemG.items !== undefined;
 }
-var environmentVariables = new postman_collection_1.VariableList(new postman_collection_1.Property({ name: 'environmentVariables' }), []);
-if (program['envvars']) {
-    var environment = JSON.parse((0, fs_1.readFileSync)(program['envvars']).toString());
-    debugPrint(environment);
-    environment['values'].forEach(function (v) {
-        environmentVariables.append(new postman_collection_1.Variable(v));
-    });
-}
 function printSnippet(item) {
     if (isItem(item)) {
         codegen.convert(lvp.language, lvp.variant, item.request, options, function (error, snippet) {
             if (error) {
                 console.error('Error trying to generate code for request:', item.request, error);
             }
-            var completeSnippet = collection.variables.replace(snippet);
+            var completeSnippet = collection.variables.replace(snippet, environmentVariables);
             var re = /(?:\{\{(.+?)\}\})/g;
             var matches = re.exec(completeSnippet);
             if (matches && matches.length > 0) {
@@ -93,6 +85,14 @@ function printSnippet(item) {
     else if (isItemGroup(item)) {
         item.items.all().forEach(printSnippet);
     }
+}
+var environmentVariables = new postman_collection_1.VariableList(new postman_collection_1.Property({ name: 'environmentVariables' }), []);
+if (program['envvars']) {
+    var environment = JSON.parse((0, fs_1.readFileSync)(program['envvars']).toString());
+    debugPrint(environment);
+    environment['values'].forEach(function (v) {
+        environmentVariables.append(new postman_collection_1.Variable(v));
+    });
 }
 var lvp = program['language_variant'];
 debugPrint(environmentVariables);
