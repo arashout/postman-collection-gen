@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^4.1.1",
-    "postman-code-generators": "^1.1.5",
+    "postman-code-generators": "^1.4.1",
     "postman-collection": "^4.1.0",
     "postman-sdk": "^1.3.7"
   },
