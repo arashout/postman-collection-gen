@@ -10,12 +10,12 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^4.1.1",
-    "postman-code-generators": "^0.2.4",
-    "postman-collection": "^3.6.0",
+    "postman-code-generators": "^1.1.5",
+    "postman-collection": "^4.1.0",
     "postman-sdk": "^1.3.7"
   },
   "devDependencies": {
     "@types/node": "^13.9.0",
-    "@types/postman-collection": "^3.5.0"
+    "@types/postman-collection": "^3.5.7"
   }
 }
